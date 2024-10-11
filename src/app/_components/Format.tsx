@@ -20,9 +20,14 @@ type Props = {
   answers: { option: string, explanation?: string, bool: boolean }[]
 }[]
 
+type clicked = {
+  optionHx: { questionIndex: number, optionIndex: number }[]
+}
+
 function Format({ data }: { data: Props }) {
   const pathname = usePathname()
   const [index, setIndex] = useState<number>(0)
+  const [clickedOption, setClickedOption] = useState<clicked>({ optionHx: [] })
   const hasPageBeenRenderedFirstTime = useRef<boolean>(false)
   const [resumeIndex, setResumeIndex] = useState<number>(0)
   const [resumeModal, setResumeModal] = useState<boolean>(false)
@@ -30,30 +35,43 @@ function Format({ data }: { data: Props }) {
 
   const totalQuestions = useMemo((): number => data.length, [data])
 
+  // use Effect for showing resume modal on first render
   useEffect(() => {
-    const storedIndex = localStorage.getItem(pathname)
-    if (storedIndex != null) {
-      if (index < parseInt(storedIndex)) {
-        if (parseInt(storedIndex) + 1 == totalQuestions) {
-          localStorage.removeItem(storedIndex)
-        }
-        else {
-          setResumeIndex(parseInt(storedIndex))
-          setResumeModal(true)
-        }
+    const storedIndex = localStorage.getItem(`${pathname}-index`)
+    const storedHx = localStorage.getItem(`${pathname}-hx`)
+
+    if (index < parseInt(storedIndex as string)) {
+      if (parseInt(storedIndex as string) + 1 == totalQuestions) {
+        localStorage.removeItem(storedIndex as string)
+        localStorage.removeItem(storedHx as string)
+      }
+      else {
+        setClickedOption(JSON.parse(storedHx as string))
+        setResumeIndex(parseInt(storedIndex as string))
+        setResumeModal(true)
       }
     }
     // eslint-disable-next-line
   }, [])
 
+  // use Effect for setting index in local storage on each render (except first render) and setting clicked option in local storage on each render (except when both the index is zero and the storedHx is not empty)
   useEffect(() => {
+    const storedHx = `${pathname}-hx`
+    const storedIndex = `${pathname}-index`
+
+    if (index == 0 && localStorage.getItem(storedHx) !== null) {
+    }
+    else {
+      localStorage.setItem(storedHx, JSON.stringify(clickedOption))
+    }
+
     if (hasPageBeenRenderedFirstTime.current) {
-      localStorage.setItem(pathname, index.toString())
-      console.log('yes')
-    } else {console.log('no')}
+      localStorage.setItem(storedIndex, index.toString())
+    }
     hasPageBeenRenderedFirstTime.current = true
-  }, [index, pathname])
+  }, [index, clickedOption, pathname])
   
+  // use Effect for keyboard navigation
   useEffect(() => {
     function navigate(e: KeyboardEvent) {
       if (e.key==='ArrowRight' && index + 1 < totalQuestions) setIndex(prev => prev + 1)
@@ -77,13 +95,13 @@ function Format({ data }: { data: Props }) {
         <HintDifficulty hint={data[index].hint} difficulty={data[index].difficulty}/>
       }
 
-      <Options options={data[index].answers} index={index}/>
+      <Options options={data[index].answers} clickedOption={clickedOption} setClickedOption={setClickedOption} index={index}/>
 
       <Footer index={index} setIndex={setIndex} totalQuestions={totalQuestions} setFinishModal={setFinishModal}/>
 
     </div>
 
-    <ResumeModal resumeModal={resumeModal} setResumeModal={setResumeModal} resumeIndex={resumeIndex} setIndex={setIndex}/>
+    <ResumeModal resumeModal={resumeModal} setResumeModal={setResumeModal} resumeIndex={resumeIndex} setClickedOption={setClickedOption} setIndex={setIndex}/>
 
     <FinishModal finishModal={finishModal} setFinishModal={setFinishModal}/>
     </>

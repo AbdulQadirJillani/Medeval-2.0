@@ -8,17 +8,27 @@ import {
 } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
 
+type clicked = {
+  optionHx: { questionIndex: number, optionIndex: number }[]
+}
+
 type Props = {
   resumeModal: boolean,
   setResumeModal: Dispatch<SetStateAction<boolean>>,
   resumeIndex: number,
+  setClickedOption: Dispatch<SetStateAction<clicked>>,
   setIndex: Dispatch<SetStateAction<number>>
 }
 
-const ResumeModal = ({ resumeModal, setResumeModal, resumeIndex, setIndex }: Props) => {
+const ResumeModal = ({ resumeModal, setResumeModal, resumeIndex, setClickedOption, setIndex }: Props) => {
   const Resume = () => {
     setResumeModal(false)
     setIndex(resumeIndex)
+  }
+
+  const StartBegin = () => {
+    setClickedOption({ optionHx: [] })
+    setResumeModal(false)
   }
 
   return (
@@ -31,7 +41,7 @@ const ResumeModal = ({ resumeModal, setResumeModal, resumeIndex, setIndex }: Pro
                 </DialogDescription>
             </DialogHeader>
             <Button onClick={Resume}>Resume</Button>
-            <Button onClick={() => setResumeModal(false)}>Start from beginning</Button>
+            <Button onClick={StartBegin}>Start from beginning</Button>
         </DialogContent>
     </Dialog>
   )
