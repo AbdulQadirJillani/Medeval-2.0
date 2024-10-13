@@ -39,7 +39,7 @@ const Menu = ({ className, setOpen }: Props) => {
       <NavigationMenu>
         <NavigationMenuList>
           <NavigationMenuItem>
-            <NavigationMenuTrigger className="text-lg font-normal">
+            <NavigationMenuTrigger className="text-lg font-normal focus:outline outline-2">
               Past Papers
             </NavigationMenuTrigger>
             <NavigationMenuContent>
