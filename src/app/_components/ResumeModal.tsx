@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from "react"
+import { Dispatch, MutableRefObject, SetStateAction } from "react"
 import {
   Dialog,
   DialogContent,
@@ -15,7 +15,7 @@ type clicked = {
 type Props = {
   resumeModal: boolean,
   setResumeModal: Dispatch<SetStateAction<boolean>>,
-  resumeIndex: number,
+  resumeIndex: MutableRefObject<number>,
   setClickedOption: Dispatch<SetStateAction<clicked>>,
   setIndex: Dispatch<SetStateAction<number>>
 }
@@ -23,7 +23,7 @@ type Props = {
 const ResumeModal = ({ resumeModal, setResumeModal, resumeIndex, setClickedOption, setIndex }: Props) => {
   const Resume = () => {
     setResumeModal(false)
-    setIndex(resumeIndex)
+    setIndex(resumeIndex.current)
   }
 
   const StartBegin = () => {
@@ -37,7 +37,7 @@ const ResumeModal = ({ resumeModal, setResumeModal, resumeIndex, setClickedOptio
             <DialogHeader>
                 <DialogTitle>Resume from where you left off?</DialogTitle>
                 <DialogDescription>
-                    You left off at question number: {resumeIndex + 1}
+                    You left off at question number: {resumeIndex.current + 1}
                 </DialogDescription>
             </DialogHeader>
             <Button onClick={Resume}>Resume</Button>

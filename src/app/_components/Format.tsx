@@ -29,25 +29,43 @@ function Format({ data }: { data: Props }) {
   const [index, setIndex] = useState<number>(0)
   const [clickedOption, setClickedOption] = useState<clicked>({ optionHx: [] })
   const hasPageBeenRenderedFirstTime = useRef<boolean>(false)
-  const [resumeIndex, setResumeIndex] = useState<number>(0)
+  const resumeIndex = useRef<number>(0)
   const [resumeModal, setResumeModal] = useState<boolean>(false)
   const [finishModal, setFinishModal] = useState<boolean>(false)
-
+  const score = useRef<number>(0)
+  const lock = useRef<boolean>(false)
+  const highestIndex = useRef<number>(-1)
   const totalQuestions = useMemo((): number => data.length, [data])
+
+  // use Effect for setting score and option lock
+  useEffect(() => {
+    if (index > highestIndex.current) {
+      lock.current = false
+      highestIndex.current = index
+    } else lock.current = true
+
+    const storedScore = parseInt(localStorage.getItem(`${pathname}-score`) as string)
+
+    if (index === 0 && storedScore > 0) {
+    } else localStorage.setItem(`${pathname}-score`, score.current.toString())
+  }, [index, score, pathname])
 
   // use Effect for showing resume modal on first render
   useEffect(() => {
-    const storedIndex = localStorage.getItem(`${pathname}-index`)
-    const storedHx = localStorage.getItem(`${pathname}-hx`)
+    const storedIndex = parseInt(localStorage.getItem(`${pathname}-index`) as string)
+    const storedHx = localStorage.getItem(`${pathname}-hx`) as string
+    const storedScore = parseInt(localStorage.getItem(`${pathname}-score`) as string)
 
-    if (index < parseInt(storedIndex as string)) {
-      if (parseInt(storedIndex as string) + 1 == totalQuestions) {
-        localStorage.removeItem(storedIndex as string)
-        localStorage.removeItem(storedHx as string)
+    if (index < storedIndex) {
+      if (storedIndex + 1 == totalQuestions) {
+        localStorage.removeItem(storedIndex.toString())
+        localStorage.removeItem(storedHx)
+        localStorage.removeItem(storedScore.toString())
       }
       else {
-        setClickedOption(JSON.parse(storedHx as string))
-        setResumeIndex(parseInt(storedIndex as string))
+        setClickedOption(JSON.parse(storedHx))
+        resumeIndex.current = storedIndex
+        score.current = storedScore
         setResumeModal(true)
       }
     }
@@ -95,7 +113,7 @@ function Format({ data }: { data: Props }) {
         <HintDifficulty hint={data[index].hint} difficulty={data[index].difficulty}/>
       }
 
-      <Options options={data[index].answers} clickedOption={clickedOption} setClickedOption={setClickedOption} index={index}/>
+      <Options options={data[index].answers} clickedOption={clickedOption} setClickedOption={setClickedOption} index={index} score={score} lock={lock} highestIndex={highestIndex}/>
 
       <Footer index={index} setIndex={setIndex} totalQuestions={totalQuestions} setFinishModal={setFinishModal}/>
 
@@ -103,7 +121,7 @@ function Format({ data }: { data: Props }) {
 
     <ResumeModal resumeModal={resumeModal} setResumeModal={setResumeModal} resumeIndex={resumeIndex} setClickedOption={setClickedOption} setIndex={setIndex}/>
 
-    <FinishModal finishModal={finishModal} setFinishModal={setFinishModal}/>
+    <FinishModal finishModal={finishModal} setFinishModal={setFinishModal} score={score} totalQuestions={totalQuestions}/>
     </>
   )
 }

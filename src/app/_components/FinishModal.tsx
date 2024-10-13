@@ -1,5 +1,5 @@
 import { useRouter } from "next/navigation"
-import { Dispatch, SetStateAction } from "react"
+import { Dispatch, MutableRefObject, SetStateAction } from "react"
 import {
   Dialog,
   DialogContent,
@@ -12,9 +12,11 @@ import { Button } from "@/components/ui/button"
 type Props = {
   finishModal: boolean,
   setFinishModal: Dispatch<SetStateAction<boolean>>,
+  score: MutableRefObject<number>,
+  totalQuestions: number
 }
 
-const FinishModal = ({ finishModal, setFinishModal }: Props) => {
+const FinishModal = ({ finishModal, setFinishModal, score, totalQuestions }: Props) => {
   const router = useRouter()
 
   const HomeRedirect = () => {
@@ -28,7 +30,7 @@ const FinishModal = ({ finishModal, setFinishModal }: Props) => {
             <DialogHeader>
                 <DialogTitle>Done</DialogTitle>
                 <DialogDescription>
-                    Want to practice more?
+                  Score: {score.current} out of {totalQuestions}
                 </DialogDescription>
             </DialogHeader>
             <Button onClick={HomeRedirect}>Go back to HomePage</Button>
