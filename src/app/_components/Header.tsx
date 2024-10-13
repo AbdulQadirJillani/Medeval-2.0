@@ -26,8 +26,8 @@ const Header = ({ questionOrigin, questionID, totalQuestions }: Props) => {
   return (
     <>
     <div className="my-3 flex justify-between">
-      <span className="font-semibold capitalize text-lg bg-gradient-to-r from-[hsl(202,_100%,_56%)] via-[hsl(269,_100%,_61%)] to-[hsl(343,_100%,_50%)] bg-clip-text text-transparent">{name}</span>
-      <span className="text-lg bg-gradient-to-r from-[hsl(202,_100%,_56%)] via-[hsl(269,_100%,_61%)] to-[hsl(343,_100%,_50%)] bg-clip-text text-transparent">{questionID} out of {totalQuestions}</span>
+      <span className="font-semibold capitalize text-lg bg-clip-text text-transparent bg-gradient-to-r from-[hsl(202,_100%,_56%)] via-[hsl(269,_100%,_61%)] to-[hsl(343,_100%,_50%)]">{name}</span>
+      <span className="text-lg bg-clip-text text-transparent bg-gradient-to-r from-[hsl(202,_100%,_56%)] via-[hsl(269,_100%,_61%)] to-[hsl(343,_100%,_50%)]">{questionID} out of {totalQuestions}</span>
     </div>
     <Separator orientation="horizontal" className="bg-[#020817] w-full h-[1px]" />
     </>

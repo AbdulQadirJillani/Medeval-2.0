@@ -28,11 +28,11 @@ const Menu = ({ className, setOpen }: Props) => {
   return (
     <div className={className}>
 
-      <Link className="px-4 py-2 text-lg" href="https://drive.google.com/drive/folders/1jmdTFwBD56cLCH1zYj5HLcUfrBK0HoWq?usp=drive_link" target="_blank">
+      <Link className="px-4 py-1 text-lg rounded-md hover:bg-[#F1F5F9]" href="https://drive.google.com/drive/folders/1jmdTFwBD56cLCH1zYj5HLcUfrBK0HoWq?usp=drive_link" target="_blank">
         Resources
       </Link>
 
-      <Link className="px-4 py-2 text-lg" href="/SystemReview" onClick={close}>
+      <Link className="px-4 py-1 text-lg rounded-md hover:bg-[#F1F5F9]" href="/SystemReview" onClick={close}>
         System Review
       </Link>
 
