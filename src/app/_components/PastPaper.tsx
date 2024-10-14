@@ -16,11 +16,11 @@ const PastPaper = ({ modules, years, annual }: Props ) => {
         modules.map((m) => {
           return(
             <div key={m} className={cn(styles.modulewrapper, styles[m])}>
-              <h3 className="text-[#020817] text-lg font-semibold capitalize">
+              <h3 className="text-lg font-semibold capitalize">
                 {m.split('_').join(' & ')}
               </h3>
-              <Separator orientation="horizontal" className='w-[80%] h-[1px] mb-2 mx-auto bg-[#020817]'/>
-              <div className="flex flex-col gap-1 text-lg font-medium text-[#0F172A]">
+              <Separator orientation="horizontal" className='w-[80%] h-[1px] mb-2 mx-auto bg-foreground'/>
+              <div className="flex flex-col gap-1 text-lg">
                 {
                   years[m].map((y) => <Link key={y} href={`/PastPapers/${annual}/${m}-${y}`}>{y}</Link>)
                 }

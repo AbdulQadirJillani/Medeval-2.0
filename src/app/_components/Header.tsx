@@ -29,7 +29,7 @@ const Header = ({ questionOrigin, questionID, totalQuestions }: Props) => {
       <span className="font-semibold capitalize text-lg bg-clip-text text-transparent bg-gradient-to-r from-[hsl(202,_100%,_56%)] via-[hsl(269,_100%,_61%)] to-[hsl(343,_100%,_50%)]">{name}</span>
       <span className="text-lg bg-clip-text text-transparent bg-gradient-to-r from-[hsl(202,_100%,_56%)] via-[hsl(269,_100%,_61%)] to-[hsl(343,_100%,_50%)]">{questionID} out of {totalQuestions}</span>
     </div>
-    <Separator orientation="horizontal" className="bg-[#020817] w-full h-[1px]" />
+    <Separator orientation="horizontal" className="w-full h-[1px]" />
     </>
   )
 }

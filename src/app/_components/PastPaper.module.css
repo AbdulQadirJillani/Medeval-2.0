@@ -31,11 +31,11 @@
     z-index: -200;
     background-image: conic-gradient(
         from var(--gradient-angle),
-        hsl(202, 100%, 56%, 0.8),
-        hsl(269, 100%, 61%, 0.8),
-        hsl(343, 100%, 50%, 0.8),
-        hsl(269, 100%, 61%, 0.8),
-        hsl(202, 100%, 56%, 0.8));
+        hsl(202, 100%, 56%, 0.7),
+        hsl(269, 100%, 61%, 0.7),
+        hsl(343, 100%, 50%, 0.7),
+        hsl(269, 100%, 61%, 0.7),
+        hsl(202, 100%, 56%, 0.7));
     animation: rotation 10s linear infinite;
     filter: blur(0.1rem);
 }
@@ -43,7 +43,7 @@
 .modulewrapper::after {
     inset: -0.3rem;
     z-index: -100;
-    background-color: whitesmoke;
+    @apply bg-gradient-to-br from-accent via-background to-accent;
 } 
 
 .foundation {

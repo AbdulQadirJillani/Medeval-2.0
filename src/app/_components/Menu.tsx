@@ -6,13 +6,11 @@ import {
   NavigationMenu,
   NavigationMenuContent,
   NavigationMenuItem,
-  NavigationMenuLink,
-  navigationMenuTriggerStyle,
   NavigationMenuList,
   NavigationMenuTrigger
 } from "@/components/ui/navigation-menu"
 import { LucideDiamond } from "lucide-react"
-import { cn } from "@/lib/utils"
+import Toggle from "./Toggle"
 
 type Props = {
   className: string,
@@ -28,18 +26,18 @@ const Menu = ({ className, setOpen }: Props) => {
   return (
     <div className={className}>
 
-      <Link className="px-4 py-1 text-lg rounded-md hover:bg-[#F1F5F9]" href="https://drive.google.com/drive/folders/1jmdTFwBD56cLCH1zYj5HLcUfrBK0HoWq?usp=drive_link" target="_blank">
+      <Link className="px-4 py-1 text-lg rounded-md hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none" href="https://drive.google.com/drive/folders/1jmdTFwBD56cLCH1zYj5HLcUfrBK0HoWq?usp=drive_link" target="_blank">
         Resources
       </Link>
 
-      <Link className="px-4 py-1 text-lg rounded-md hover:bg-[#F1F5F9]" href="/SystemReview" onClick={close}>
+      <Link className="px-4 py-1 text-lg rounded-md hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none" href="/SystemReview" onClick={close}>
         System Review
       </Link>
 
       <NavigationMenu>
         <NavigationMenuList>
           <NavigationMenuItem>
-            <NavigationMenuTrigger className="text-lg font-normal focus:outline outline-2">
+            <NavigationMenuTrigger className="text-lg font-normal">
               Past Papers
             </NavigationMenuTrigger>
             <NavigationMenuContent>
@@ -47,12 +45,10 @@ const Menu = ({ className, setOpen }: Props) => {
                 {
                   years.map((y) => (
                     <li key={y}>
-                      <NavigationMenuLink className={cn("flex gap-1 items text-[#505d70]", navigationMenuTriggerStyle())}>
+                      <Link className="flex gap-1 items-center px-2 py-1 rounded-md hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none" href={`/PastPapers/${y}`} onClick={close}>
                         <LucideDiamond size={10}/>
-                        <Link href={`/PastPapers/${y}`} onClick={close}>
-                          {y.split('-').join(' ')}
-                        </Link>
-                      </NavigationMenuLink>
+                        {y.split('-').join(' ')}
+                      </Link>
                     </li>
                   ))
                 }
@@ -61,6 +57,7 @@ const Menu = ({ className, setOpen }: Props) => {
           </NavigationMenuItem>
         </NavigationMenuList>
       </NavigationMenu>
+      <Toggle/>
     </div>
   )
 }

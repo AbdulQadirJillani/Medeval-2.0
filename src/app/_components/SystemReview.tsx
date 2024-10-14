@@ -11,7 +11,7 @@ const SystemReview = ({ systems }: Props) => {
       {
         systems.map((s) => (
           <Link key={s} href={`/SystemReview/${s}`} className={styles.modulewrapper}>
-            <h1 className="text-[#020817] font-medium text-lg capitalize">
+            <h1 className="font-medium text-lg capitalize">
               {s.split('-').join(' ')}
             </h1>
           </Link>

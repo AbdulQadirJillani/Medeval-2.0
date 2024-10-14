@@ -8,11 +8,11 @@ import { useState } from "react"
 const NavBar = () => {
   const [open, setOpen] = useState<boolean>(false)
   return (
-    <nav className="py-3 px-3 shadow-lg">
+    <nav className="py-3 px-3 shadow-lg shadow-accent">
       <div className="w-[90%] mx-auto flex justify-between items-center">
         <SideBar open={open} setOpen={setOpen}/>
         <Logo/>
-        <Menu className="hidden md:flex md:gap-6 md:items-center" setOpen={setOpen}/>
+        <Menu className="hidden md:flex md:gap-5 md:items-center" setOpen={setOpen}/>
       </div>
     </nav>
   )

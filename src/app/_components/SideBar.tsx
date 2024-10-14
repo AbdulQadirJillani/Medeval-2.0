@@ -29,7 +29,7 @@ function SideBar({ open, setOpen }: Props) {
             <Logo/>
           </SheetTitle>
         </SheetHeader>
-        <Menu className="flex flex-col gap-6 w-fit" setOpen={setOpen}/>
+        <Menu className="flex flex-col gap-5 w-fit" setOpen={setOpen}/>
       </SheetContent>
     </Sheet>
   )
