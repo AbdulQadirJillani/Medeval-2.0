@@ -24,6 +24,15 @@ type clicked = {
   optionHx: { questionIndex: number, optionIndex: number }[]
 }
 
+type performance = {
+  performance: {
+    dateTime: string,
+    questionOrigin: string,
+    score: number,
+    totalQuestions: number
+  }[]
+}
+
 function Format({ data }: { data: Props }) {
   const pathname = usePathname()
   const [index, setIndex] = useState<number>(0)
@@ -36,6 +45,46 @@ function Format({ data }: { data: Props }) {
   const lock = useRef<boolean>(false)
   const highestIndex = useRef<number>(-1)
   const totalQuestions = useMemo((): number => data.length, [data])
+  const performance = useRef<performance>({performance: []})
+
+  let questionOrigin = 'question'
+  if (typeof data[0].info === typeof 'string') {
+    const array = (data[0].info as string).split("/")
+    if (array.length == 1) questionOrigin = array[0]
+    else questionOrigin = `${array[1]} - ${array[2]}`
+  }
+  else if (Array.isArray(data[0].info)) {
+    let mod
+    const yearArr = []
+    for (let index = 1; index < data[0].info.length; index++) {
+      const array = data[0].info[index].split("/")
+      mod = array[1]
+      yearArr.push(` ${array[2]}`)
+    }
+    questionOrigin = `${mod} - compiled (${yearArr.toString()} )`
+  }
+
+  // use Effect for storing performance in local storage
+  useEffect(() => {
+    const storedPerformance = JSON.parse(localStorage.getItem('performance') as string)
+    if (storedPerformance == null) {
+      performance.current = {performance: []}
+    }
+    else {
+      performance.current = storedPerformance
+    }
+    if (finishModal) {
+      performance.current.performance.push({
+        dateTime: `${new Date().toLocaleString('en-us', {day: '2-digit', month: 'short', year: 'numeric'})} - ${new Date().toLocaleString('en-us', {hour: '2-digit', minute: '2-digit', hour12: true})}`,
+        questionOrigin: questionOrigin,
+        score: score.current,
+        totalQuestions: totalQuestions
+      })
+      localStorage.setItem('performance', JSON.stringify(performance.current))
+    }
+
+    // eslint-disable-next-line
+  }, [score, finishModal])
 
   // use Effect for setting score and option lock
   useEffect(() => {
@@ -104,7 +153,7 @@ function Format({ data }: { data: Props }) {
     <>
     <div className="w-[80%] my-6 mx-auto">
 
-      <Header questionOrigin={data[index].info} questionID={index + 1} totalQuestions={totalQuestions}/>
+      <Header questionOrigin={questionOrigin} questionID={index + 1} totalQuestions={totalQuestions}/>
 
       <Question question={data[index].question}/>
 

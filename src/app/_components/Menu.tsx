@@ -30,8 +30,12 @@ const Menu = ({ className, setOpen }: Props) => {
         Resources
       </Link>
 
-      <Link className="px-4 py-1 text-lg rounded-md hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none" href="/SystemReview" onClick={close}>
+      {/* <Link className="px-4 py-1 text-lg rounded-md hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none" href="/SystemReview" onClick={close}>
         System Review
+      </Link> */}
+
+      <Link className="px-4 py-1 text-lg rounded-md hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none" href="/Performance" onClick={close}>
+        Performance
       </Link>
 
       <NavigationMenu>

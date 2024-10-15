@@ -33,7 +33,9 @@ const FinishModal = ({ finishModal, setFinishModal, score, totalQuestions }: Pro
                   Score: {score.current} out of {totalQuestions}
                 </DialogDescription>
             </DialogHeader>
-            <Button onClick={HomeRedirect}>Go back to HomePage</Button>
+            <Button className="bg-[#00ACE6] hover:bg-[#008fbf]" onClick={HomeRedirect}>
+              Go back to HomePage
+            </Button>
         </DialogContent>
     </Dialog>
   )

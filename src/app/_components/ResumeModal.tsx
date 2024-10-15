@@ -40,8 +40,12 @@ const ResumeModal = ({ resumeModal, setResumeModal, resumeIndex, setClickedOptio
                     You left off at question number: {resumeIndex.current + 1}
                 </DialogDescription>
             </DialogHeader>
-            <Button onClick={Resume}>Resume</Button>
-            <Button onClick={StartBegin}>Start from beginning</Button>
+            <Button className="bg-[#00ACE6] hover:bg-[#008fbf]" onClick={Resume}>
+              Resume
+            </Button>
+            <Button className="bg-[#00ACE6] hover:bg-[#008fbf]" onClick={StartBegin}>
+              Start from beginning
+            </Button>
         </DialogContent>
     </Dialog>
   )
