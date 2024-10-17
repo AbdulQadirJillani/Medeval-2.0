@@ -74,12 +74,16 @@ function Format({ data }: { data: Props }) {
       performance.current = storedPerformance
     }
     if (finishModal) {
-      performance.current.performance.push({
+      const newPerf = {
         dateTime: `${new Date().toLocaleString('en-us', {day: '2-digit', month: 'short', year: 'numeric'})} - ${new Date().toLocaleString('en-us', {hour: '2-digit', minute: '2-digit', hour12: true})}`,
         questionOrigin: questionOrigin,
         score: score.current,
         totalQuestions: totalQuestions
-      })
+      }
+      const lastPerf = performance.current.performance[performance.current.performance.length - 1]
+      if (lastPerf.dateTime != newPerf.dateTime && lastPerf.questionOrigin != newPerf.questionOrigin && lastPerf.score != newPerf.score) {
+        performance.current.performance.push(newPerf)
+      }
       localStorage.setItem('performance', JSON.stringify(performance.current))
     }
 

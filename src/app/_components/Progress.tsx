@@ -1,9 +1,16 @@
-const Progress = ({ percentage }: { percentage: number }) => {
+import { cn } from "@/lib/utils";
+
+type Props = {
+  percentage: number,
+  className?: string
+}
+
+const Progress = ({ percentage, className }: Props) => {
   const radius = 90
   const circ = 2 * Math.PI * radius;
   const strokePct = ((100 - percentage) * circ) / 100
   return (
-    <svg viewBox="0 0 200 200" className="size-24 md:size-32 lg:size-36">
+    <svg viewBox="0 0 200 200" className={cn("size-24 md:size-32 lg:size-36", className)}>
       <g transform={`rotate(-90 ${"100 100"})`}>
         <circle className="stroke-accent"
           r={radius}

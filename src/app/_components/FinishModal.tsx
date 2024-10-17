@@ -8,6 +8,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
+import Progress from "./Progress"
 
 type Props = {
   finishModal: boolean,
@@ -33,6 +34,7 @@ const FinishModal = ({ finishModal, setFinishModal, score, totalQuestions }: Pro
                   Score: {score.current} out of {totalQuestions}
                 </DialogDescription>
             </DialogHeader>
+            <Progress className="mx-auto mb-5" percentage={score.current/totalQuestions*100}/>
             <Button className="bg-[#00ACE6] hover:bg-[#008fbf]" onClick={HomeRedirect}>
               Go back to HomePage
             </Button>
