@@ -80,11 +80,19 @@ function Format({ data }: { data: Props }) {
         score: score.current,
         totalQuestions: totalQuestions
       }
-      const lastPerf = performance.current.performance[performance.current.performance.length - 1]
-      if (lastPerf.dateTime != newPerf.dateTime && lastPerf.questionOrigin != newPerf.questionOrigin && lastPerf.score != newPerf.score) {
-        performance.current.performance.push(newPerf)
+      if (performance.current.performance.length > 0) {
+        const lastPerf = performance.current.performance[performance.current.performance.length - 1]
+        if (lastPerf.dateTime == newPerf.dateTime && lastPerf.questionOrigin == newPerf.questionOrigin) {
+        }
+        else {
+          performance.current.performance.push(newPerf)
+          localStorage.setItem('performance', JSON.stringify(performance.current))
+        }
       }
-      localStorage.setItem('performance', JSON.stringify(performance.current))
+      else {
+        performance.current.performance.push(newPerf)
+        localStorage.setItem('performance', JSON.stringify(performance.current))
+      }
     }
 
     // eslint-disable-next-line
